@@ -18,7 +18,7 @@ interface RecordingsListProps {
 export default function RecordingsList({ recordings, onPlay, onDelete }: RecordingsListProps) {
   return (
     <div className="space-y-4 w-full max-w-2xl mx-auto">
-      <h2 className="text-2xl font-bold mb-6 text-center">Recorded Automations</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center"></h2>
       <div className="space-y-3">
         {recordings.map((recording) => (
           <div 
