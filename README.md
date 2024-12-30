@@ -1,9 +1,11 @@
 # GigWey
 Web Automation Reimagined Automate your web workflows with pixel-perfect precision and AI-powered intelligence and a Pixel-Perfect Control Sub-pixel accuracy for precise automation
-![screencapture-localhost-5173-2024-12-30-15_58_45](https://github.com/user-attachments/assets/713d45a2-1901-4464-81fd-15f64b72440c)
 
-![image](https://github.com/user-attachments/assets/ea0f83c5-4de9-43f9-8dce-29ba5d6119ce)
+![screencapture-localhost-5173-2024-12-30-19_09_49](https://github.com/user-attachments/assets/fcdbcf75-afea-434b-8d11-0943e52bf520)
 
-![screencapture-localhost-5173-2024-12-30-16_00_45](https://github.com/user-attachments/assets/34c2a33d-fd6f-4c72-a8da-4140a92ab749)
+![image](https://github.com/user-attachments/assets/ac86a369-2e4e-4d14-ad41-5dd3462e836b)
 
-![screencapture-localhost-5173-2024-12-30-16_02_18](https://github.com/user-attachments/assets/776ae72c-a0a7-4bbb-bb27-7ff3c82c76cc)
+![screencapture-localhost-5173-2024-12-30-19_10_59](https://github.com/user-attachments/assets/c1f28149-e482-44f7-b8b9-e165c3bc660c)
+
+![image](https://github.com/user-attachments/assets/6f70d3d7-3182-41d4-883a-32ec1e8a2845)
+
