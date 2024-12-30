@@ -1,6 +1,6 @@
 import React from 'react';
 import { Play, Trash2, Clock, HardDrive } from 'lucide-react';
-
+export const runtime = "edge";
 interface Recording {
   id: string;
   name: string;

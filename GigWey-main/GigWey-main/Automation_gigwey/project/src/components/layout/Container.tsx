@@ -1,5 +1,5 @@
 import React from 'react';
-
+export const runtime = "edge";
 interface ContainerProps {
   children: React.ReactNode;
   className?: string;

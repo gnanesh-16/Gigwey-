@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pause, Square, Clock, Zap, HardDrive } from 'lucide-react';
-
+export const runtime = "edge";
 interface RecordingStatusProps {
   duration: string;
   actions: number;

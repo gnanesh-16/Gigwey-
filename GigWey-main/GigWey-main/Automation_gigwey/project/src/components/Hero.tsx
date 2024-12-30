@@ -4,7 +4,7 @@ import Container from './layout/Container';
 import RecordingStatus from './recording/RecordingStatus';
 import RecordingsList from './recording/RecordingsList';
 import Infographic from './infographics/Infographic';
-
+export const runtime = "edge";
 export default function Hero() {
   const [isRecording, setIsRecording] = useState(false);
   const [showRecordings, setShowRecordings] = useState(false);

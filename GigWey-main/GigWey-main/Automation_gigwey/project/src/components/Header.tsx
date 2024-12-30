@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Settings, ChevronRight } from 'lucide-react';
 import Container from './layout/Container';
 import BetaForm from './beta/BetaForm';
-
+export const runtime = "edge";
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showBetaForm, setShowBetaForm] = useState(false);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Github, Twitter } from 'lucide-react';
-
+export const runtime = "edge";
 export default function Footer() {
   return (
     <footer className="bg-black py-8 px-6 border-t border-zinc-800/50">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { MousePointer2, Cpu, Zap, Network } from 'lucide-react';
-
+export const runtime = "edge";
 const features = [
   {
     icon: MousePointer2,

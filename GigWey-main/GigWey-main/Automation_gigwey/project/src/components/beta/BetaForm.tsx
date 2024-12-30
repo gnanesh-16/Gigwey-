@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, X } from 'lucide-react';
+export const runtime = "edge";
 
 interface BetaFormProps {
   onClose: () => void;

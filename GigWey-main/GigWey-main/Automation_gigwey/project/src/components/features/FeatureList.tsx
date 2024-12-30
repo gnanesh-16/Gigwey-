@@ -1,7 +1,7 @@
 import React from 'react';
 import { MousePointer, Code, Settings, Zap } from 'lucide-react';
 import FeatureIcon from '../icons/FeatureIcon';
-
+export const runtime = "edge";
 const features = [
   {
     icon: MousePointer,

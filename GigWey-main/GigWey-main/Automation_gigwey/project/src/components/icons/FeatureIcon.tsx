@@ -1,6 +1,6 @@
 import React from 'react';
 import { LucideIcon } from 'lucide-react';
-
+export const runtime = "edge";
 interface FeatureIconProps {
   Icon: LucideIcon;
 }
