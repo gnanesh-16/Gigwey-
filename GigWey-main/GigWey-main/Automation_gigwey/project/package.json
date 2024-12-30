@@ -6,6 +6,7 @@
   "homepage": "https://github.com/gnanesh-16/Gigwey-/",
   "scripts": {
     "dev": "vite",
+    "predeploy": "npm run build",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
