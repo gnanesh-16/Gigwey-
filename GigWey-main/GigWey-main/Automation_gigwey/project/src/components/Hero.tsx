@@ -207,10 +207,10 @@ export default function Hero() {
               </span>
             </p>
 
-            <div className="pt-8 flex items-center justify-center gap-4">
+            <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4">
               <button
                 onClick={handleStartRecording}
-                className="group relative inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-transparent hover:border-slate-300"
+                className="group relative inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-transparent hover:border-slate-300 w-full sm:w-auto sm:px-14"
               >
                 <Play className="w-5 h-5" />
                 <span className="font-medium">Start Recording</span>
@@ -218,8 +218,7 @@ export default function Hero() {
 
               <button
                 onClick={() => setShowRecordings(true)}
-                className="group relative inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-transparent hover:border-slate-300"
-                style={{ width: 'auto' }} // Ensure the button is the same size as the "Start Recording" button
+                className="group relative inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-transparent hover:border-slate-300 w-full sm:w-auto sm:px-14"
               >
                 <ListVideo className="w-5 h-5" />
                 <span className="font-medium">View Recordings</span>
