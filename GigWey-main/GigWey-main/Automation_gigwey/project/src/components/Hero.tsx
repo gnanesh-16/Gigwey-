@@ -30,7 +30,8 @@ export default function Hero() {
       intervalRef.current = setInterval(() => {
         setDuration(prev => prev + 1);
         setActions(Math.floor(Math.random() * 52) + 1);
-        setSize((prevDuration) => (prevDuration + 1) * 0.5);
+        // Increase size by 0.1 KB per second
+        setSize(prevSize => prevSize + 0.1);
       }, 1000);
     } else if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -58,7 +59,8 @@ export default function Hero() {
       name: `Recording ${recordings.length + 1}`,
       date: new Date().toLocaleString(),
       duration: new Date(duration * 1000).toISOString().substr(11, 8),
-      size: `${(size / 1024).toFixed(2)} MB`
+      // Always display size in KB
+      size: `${size.toFixed(2)} KB`
     };
     setRecordings([...recordings, newRecording]);
   };

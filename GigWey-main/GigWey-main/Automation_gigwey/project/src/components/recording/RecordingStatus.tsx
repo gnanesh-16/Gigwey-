@@ -62,7 +62,7 @@ export default function RecordingStatus({
             <div>
               <div className="flex items-center justify-center gap-2 text-xl font-mono">
                 <HardDrive className="w-4 h-4 text-gray-400" />
-                {size}
+                {size} {/* Removed conversion to MB */}
               </div>
               <div className="text-xs text-gray-400 mt-1">SIZE</div>
             </div>
