@@ -211,7 +211,7 @@ export default function Hero() {
         <RecordingStatus
           duration={new Date(duration * 1000).toISOString().substr(11, 8)}
           actions={actions}
-          size={`${(size / 1024).toFixed(2)} MB`}
+          size={`${size.toFixed(2)} KB`}
           onPause={() => console.log('Paused')}
           onStop={handleStopRecording}
         />

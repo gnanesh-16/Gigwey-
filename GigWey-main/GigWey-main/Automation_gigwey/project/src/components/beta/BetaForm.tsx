@@ -8,13 +8,23 @@ interface BetaFormProps {
 
 export default function BetaForm({ onClose }: BetaFormProps) {
   const [email, setEmail] = useState('');
-  const [canCode, setCanCode] = useState<boolean | null>(null);
   const [newsletter, setNewsletter] = useState(false);
+  const [fullName, setFullName] = useState('');
+  const [contact, setContact] = useState('');
+  const [countryCode, setCountryCode] = useState('+91');
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleSave = () => {
+    if (contact) {
+      setIsSaved(true);
+      // Additional save logic if needed
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Handle form submission
-    console.log({ email, canCode, newsletter });
+    console.log({ email, newsletter, fullName, contact, countryCode });
     onClose();
   };
 
@@ -63,30 +73,49 @@ export default function BetaForm({ onClose }: BetaFormProps) {
           </div>
 
           <div>
-            <label className="block mb-2 text-white/90">
-              Can you write Python scripts?
-            </label>
-            <div className="space-y-2">
-              <label className="flex items-center gap-2 cursor-pointer group">
-                <input
-                  type="radio"
-                  name="canCode"
-                  checked={canCode === true}
-                  onChange={() => setCanCode(true)}
-                  className="text-orange-500 border-white/10 focus:ring-orange-500"
-                />
-                <span className="text-gray-400 group-hover:text-white transition-colors">Yes</span>
-              </label>
-              <label className="flex items-center gap-2 cursor-pointer group">
-                <input
-                  type="radio"
-                  name="canCode"
-                  checked={canCode === false}
-                  onChange={() => setCanCode(false)}
-                  className="text-orange-500 border-white/10 focus:ring-orange-500"
-                />
-                <span className="text-gray-400 group-hover:text-white transition-colors">No</span>
-              </label>
+            <label className="block mb-2 text-white/90">Full Name</label>
+            <input
+              type="text"
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              className="w-full bg-black/50 rounded-lg px-4 py-3 border border-white/10 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+              placeholder="Your Full Name"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block mb-2 text-white/90">Contact</label>
+            <div className="relative">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-white flex items-center gap-2">
+                🇮🇳 +91
+              </span>
+              <input
+                type="tel"
+                value={contact}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  if (/^\d*$/.test(value)) {
+                    setContact(value);
+                  }
+                }}
+                className="w-full pl-16 bg-black/50 rounded-lg pr-10 py-3 border border-white/10 focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all"
+                placeholder="1234567890"
+                required
+              />
+              {isSaved ? (
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
+                  <span className="text-green-500 animate-fade-in">✅ Saved</span>
+                </div>
+              ) : (
+                <button
+                  type="button"
+                  onClick={handleSave}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-green-500 transition-colors"
+                >
+                  ✓
+                </button>
+              )}
             </div>
           </div>
 

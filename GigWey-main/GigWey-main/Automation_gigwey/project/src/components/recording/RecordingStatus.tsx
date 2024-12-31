@@ -25,17 +25,17 @@ export default function RecordingStatus({
             <div className="w-2 h-2 rounded-full bg-orange-500 animate-ping" />
             RECORDING IN PROGRESS
           </div>
-          
+
           <div className="flex items-center gap-4 mb-6">
-            <button 
+            <button
               onClick={onPause}
               className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg transition-colors"
             >
               <Pause className="w-4 h-4" />
               <span>Pause</span>
             </button>
-            
-            <button 
+
+            <button
               onClick={onStop}
               className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg transition-colors"
             >
@@ -62,7 +62,7 @@ export default function RecordingStatus({
             <div>
               <div className="flex items-center justify-center gap-2 text-xl font-mono">
                 <HardDrive className="w-4 h-4 text-gray-400" />
-                {size} {/* Removed conversion to MB */}
+                {size} {/* Ensure size is displayed as KB */}
               </div>
               <div className="text-xs text-gray-400 mt-1">SIZE</div>
             </div>
