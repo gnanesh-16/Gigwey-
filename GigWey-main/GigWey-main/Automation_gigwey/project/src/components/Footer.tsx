@@ -4,7 +4,7 @@ export const runtime = "edge";
 
 export default function Footer() {
   return (
-    <footer className="bg-black py-8 px-6 border-t border-zinc-800/50">
+    <footer className="bg-black py-8 px-6 border-t border-zinc-800/50 animate-fade-in">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
         <div className="text-gray-400 mb-4 md:mb-0">
           © {new Date().getFullYear()} <a href="/" className="text-white hover:text-orange-500 transition-colors">GigWey</a>. All rights reserved.

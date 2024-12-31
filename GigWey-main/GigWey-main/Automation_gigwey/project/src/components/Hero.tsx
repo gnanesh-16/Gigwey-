@@ -75,24 +75,24 @@ export default function Hero() {
   };
 
   const handleLoopClick = (id: string) => {
-    setRecordings(recordings.map(rec => 
-      rec.id === id 
+    setRecordings(recordings.map(rec =>
+      rec.id === id
         ? { ...rec, loopCount: (rec.loopCount || 0) + 1 }
         : rec
     ));
   };
 
   const handleResetLoop = (id: string) => {
-    setRecordings(recordings.map(rec => 
-      rec.id === id 
+    setRecordings(recordings.map(rec =>
+      rec.id === id
         ? { ...rec, loopCount: undefined }
         : rec
     ));
   };
 
   const handleRename = (id: string, newName: string) => {
-    setRecordings(recordings.map(rec => 
-      rec.id === id 
+    setRecordings(recordings.map(rec =>
+      rec.id === id
         ? { ...rec, name: newName }
         : rec
     ));
@@ -120,6 +120,40 @@ export default function Hero() {
     }
   };
 
+  // New state for typewriter effect
+  const [displayedText, setDisplayedText] = useState('');
+  const fullText = 'AI-powered intelligence';
+  const typingSpeed = 150; // milliseconds
+  const deletingSpeed = 100; // milliseconds
+  const pauseBetween = 1500; // milliseconds
+  const [isDeleting, setIsDeleting] = useState(false);
+  const [loopNum, setLoopNum] = useState(0);
+
+  useEffect(() => {
+    const handleTyping = () => {
+      const i = loopNum % 2;
+      const updatedText = isDeleting
+        ? fullText.substring(0, displayedText.length - 1)
+        : fullText.substring(0, displayedText.length + 1);
+
+      setDisplayedText(updatedText);
+
+      if (!isDeleting && updatedText === fullText) {
+        setTimeout(() => setIsDeleting(true), pauseBetween);
+      } else if (isDeleting && updatedText === '') {
+        setIsDeleting(false);
+        setLoopNum(loopNum + 1);
+      }
+    };
+
+    const timer = setTimeout(
+      handleTyping,
+      isDeleting ? deletingSpeed : typingSpeed
+    );
+
+    return () => clearTimeout(timer);
+  }, [displayedText, isDeleting, loopNum]);
+
   return (
     <main className="relative min-h-screen bg-black overflow-hidden">
       {/* Background Elements */}
@@ -145,40 +179,47 @@ export default function Hero() {
       </div>
 
       {/* Main Content */}
-      <Container 
+      <Container
         className="relative pt-32 pb-20"
       >
         <div className="flex flex-col items-center justify-center min-h-[80vh]">
           <div className="text-center max-w-4xl mx-auto space-y-8">
-            <h1 className="text-7xl sm:text-8xl font-bold tracking-tight">
+            <h1 className="text-7xl sm:text-8xl font-bold tracking-tight animate-fade-in">
               <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/60">
                 Web Automation
               </span>
               <br />
               <span className="relative inline-block mt-2">
-                <span className="animate-gradient-x text-6xl sm:text-7xl">Reimagined</span>
+                <span className="animate-gradient-x text-6xl sm:text-7xl bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent">
+                  Reimagined
+                </span>
                 <div className="absolute -inset-x-6 -inset-y-4 bg-orange-500/20 blur-2xl -z-10" />
               </span>
             </h1>
 
             <p className="text-xl sm:text-2xl text-gray-400 max-w-2xl mx-auto animate-fade-in">
-              Automate your web workflows with pixel-perfect precision and 
-              <span className="text-orange-500"> AI-powered intelligence</span>
+              Automate your web workflows with pixel-perfect precision and
+              <span className="text-orange-500">
+                <span className="ml-1 inline-block">
+                  {displayedText}
+                  <span className="border-r-2 border-white animate-pulse ml-1"></span>
+                </span>
+              </span>
             </p>
 
             <div className="pt-8 flex items-center justify-center gap-4">
               <button
                 onClick={handleStartRecording}
-                className="group relative inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105"
+                className="group relative inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-transparent hover:border-slate-300"
               >
                 <Play className="w-5 h-5" />
                 <span className="font-medium">Start Recording</span>
-                <div className="absolute -inset-0.5 rounded-full bg-orange-500/50 blur opacity-0 group-hover:opacity-100 transition-opacity" />
               </button>
 
               <button
                 onClick={() => setShowRecordings(true)}
-                className="group relative inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-white/10"
+                className="group relative inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-transparent hover:border-slate-300"
+                style={{ width: 'auto' }} // Ensure the button is the same size as the "Start Recording" button
               >
                 <ListVideo className="w-5 h-5" />
                 <span className="font-medium">View Recordings</span>
