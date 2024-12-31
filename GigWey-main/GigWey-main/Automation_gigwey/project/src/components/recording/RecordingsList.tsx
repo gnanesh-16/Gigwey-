@@ -1,19 +1,21 @@
 import React from 'react';
-import { Play, Trash2, Clock, HardDrive, Repeat } from 'lucide-react'; // Add Repeat
+import { Play, Trash2, Clock, HardDrive, Repeat } from 'lucide-react';
 export const runtime = "edge";
+
 interface Recording {
   id: string;
   name: string;
   date: string;
   duration: string;
   size: string;
+  loopCount?: number; // Add this new property
 }
 
 interface RecordingsListProps {
   recordings: Recording[];
   onPlay: (id: string) => void;
   onDelete: (id: string) => void;
-  onLoop?: (id: string) => void; // Add onLoop prop
+  onLoop: (id: string) => void; // Make onLoop required
 }
 
 export default function RecordingsList({ recordings, onPlay, onDelete, onLoop }: RecordingsListProps) {
@@ -52,12 +54,17 @@ export default function RecordingsList({ recordings, onPlay, onDelete, onLoop }:
                   <Play className="w-4 h-4" />
                 </button>
                 <button
-                  onClick={() => onLoop?.(recording.id)}
+                  onClick={() => onLoop(recording.id)}
                   className="p-2 rounded-full hover:bg-white/10 text-blue-500 transition-colors"
                   title="Loop recording"
                 >
                   <Repeat className="w-4 h-4" />
                 </button>
+                {recording.loopCount && recording.loopCount > 0 && (
+                  <div className="bg-blue-500/10 backdrop-blur-sm px-3 py-1 rounded-full">
+                    <span className="text-blue-500 text-sm">Loop: {recording.loopCount}</span>
+                  </div>
+                )}
                 <button
                   onClick={() => onDelete(recording.id)}
                   className="p-2 rounded-full hover:bg-white/10 text-red-500 transition-colors"
