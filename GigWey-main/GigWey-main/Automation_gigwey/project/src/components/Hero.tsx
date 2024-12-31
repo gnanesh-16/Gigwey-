@@ -48,6 +48,14 @@ export default function Hero() {
     ));
   };
 
+  const handleResetLoop = (id: string) => {
+    setRecordings(recordings.map(rec => 
+      rec.id === id 
+        ? { ...rec, loopCount: undefined }
+        : rec
+    ));
+  };
+
   return (
     <main className="relative min-h-screen bg-black overflow-hidden">
       {/* Background Elements */}
@@ -120,6 +128,7 @@ export default function Hero() {
                 onPlay={(id) => console.log('Playing', id)}
                 onDelete={handleDeleteRecording}
                 onLoop={handleLoopClick}
+                onResetLoop={handleResetLoop}
               >
                 {recordings.map((recording) => (
                   <div key={recording.id} className="mt-4 bg-zinc-900/90 p-4 rounded-lg border border-white/10">
