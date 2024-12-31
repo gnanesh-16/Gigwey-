@@ -18,10 +18,11 @@ export default function Hero() {
       size: '1.2 MB'
     }
   ]);
-  const [loopCounts, setLoopCounts] = useState<{ [key: string]: number }>({});
   const [duration, setDuration] = useState(0);
   const [actions, setActions] = useState(0);
   const [size, setSize] = useState(0);
+
+  const [currentlyPlayingId, setCurrentlyPlayingId] = useState<string | null>(null); // Add this state
 
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -67,6 +68,10 @@ export default function Hero() {
 
   const handleDeleteRecording = (id: string) => {
     setRecordings(recordings.filter(rec => rec.id !== id));
+    // If the deleted recording was playing, reset currentlyPlayingId
+    if (currentlyPlayingId === id) {
+      setCurrentlyPlayingId(null);
+    }
   };
 
   const handleLoopClick = (id: string) => {
@@ -91,6 +96,28 @@ export default function Hero() {
         ? { ...rec, name: newName }
         : rec
     ));
+  };
+
+  const handlePlayRecording = (id: string) => {
+    if (currentlyPlayingId === id) {
+      // If already playing, pause it
+      setCurrentlyPlayingId(null);
+      // Add logic to pause the recording if necessary
+      console.log('Paused', id);
+    } else {
+      // Start playing new recording
+      setCurrentlyPlayingId(id);
+      // Add logic to play the recording if necessary
+      console.log('Playing', id);
+    }
+  };
+
+  const handlePauseRecording = (id: string) => {
+    if (currentlyPlayingId === id) {
+      setCurrentlyPlayingId(null);
+      // Add logic to pause the recording if necessary
+      console.log('Paused', id);
+    }
   };
 
   return (
@@ -164,41 +191,14 @@ export default function Hero() {
             {showRecordings ? (
               <RecordingsList
                 recordings={recordings}
-                onPlay={(id) => console.log('Playing', id)}
+                onPlay={handlePlayRecording}
+                onPause={handlePauseRecording} // Pass onPause prop
                 onDelete={handleDeleteRecording}
                 onLoop={handleLoopClick}
                 onResetLoop={handleResetLoop}
                 onRename={handleRename}
-              >
-                {recordings.map((recording) => (
-                  <div key={recording.id} className="mt-4 bg-zinc-900/90 p-4 rounded-lg border border-white/10">
-                    <div className="flex justify-between items-center">
-                      <span className="text-white">{recording.name}</span>
-                      <div className="flex items-center gap-2">
-                        <button
-                          onClick={() => console.log('Playing', recording.id)}
-                          className="group relative inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 border border-white/10"
-                        >
-                          <Play className="w-5 h-5" />
-                          <span className="font-medium">Play</span>
-                        </button>
-                        <button
-                          onClick={() => handleLoopClick(recording.id)}
-                          className="group relative inline-flex items-center gap-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 border border-blue-500"
-                        >
-                          <Repeat className="w-5 h-5" />
-                          <span className="font-medium">Loop</span>
-                        </button>
-                      </div>
-                    </div>
-                    {loopCounts[recording.id] > 0 && (
-                      <div className="mt-2 bg-white/10 p-2 rounded-lg backdrop-blur-sm">
-                        <span className="text-white">Loop: {loopCounts[recording.id]}</span>
-                      </div>
-                    )}
-                  </div>
-                ))}
-              </RecordingsList>
+                currentlyPlayingId={currentlyPlayingId} // Pass currentlyPlayingId prop
+              />
             ) : (
               <Infographic />
             )}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, Trash2, Clock, HardDrive, Repeat, X, Edit3 } from 'lucide-react'; // Add Edit3 icon
+import { Play, Pause, Trash2, Clock, HardDrive, Repeat, X, Edit3 } from 'lucide-react'; // Add Edit3 icon
 export const runtime = "edge";
 
 interface Recording {
@@ -14,16 +14,18 @@ interface Recording {
 interface RecordingsListProps {
   recordings: Recording[];
   onPlay: (id: string) => void;
+  onPause: (id: string) => void; // Add onPause prop
   onDelete: (id: string) => void;
   onLoop: (id: string) => void; // Make onLoop required
   onResetLoop: (id: string) => void; // Add new prop
   onRename: (id: string, newName: string) => void; // Add new prop
+  currentlyPlayingId: string | null; // Add currentlyPlayingId prop
   duration?: string; // Add
   actions?: number;  // Add
   size?: string;     // Add
 }
 
-export default function RecordingsList({ recordings, onPlay, onDelete, onLoop, onResetLoop, onRename, duration, actions, size }: RecordingsListProps) {
+export default function RecordingsList({ recordings, onPlay, onPause, onDelete, onLoop, onResetLoop, onRename, currentlyPlayingId, duration, actions, size }: RecordingsListProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [newName, setNewName] = useState<string>('');
 
@@ -95,13 +97,25 @@ export default function RecordingsList({ recordings, onPlay, onDelete, onLoop, o
                   </div>
                 </div>
                 <div className="flex items-center gap-2 relative">
+                  {/* Toggle between Play and Pause */}
                   <button
-                    onClick={() => onPlay(recording.id)}
-                    className="p-2 rounded-full hover:bg-white/10 text-orange-500 transition-colors"
-                    title="Play recording"
+                    onClick={() => {
+                      currentlyPlayingId === recording.id ? onPause(recording.id) : onPlay(recording.id);
+                    }}
+                    className={`p-2 rounded-full transition-transform duration-300 ${
+                      currentlyPlayingId === recording.id
+                        ? 'text-red-500 transform rotate-90'
+                        : 'hover:bg-white/10 text-orange-500'
+                    }`}
+                    title={currentlyPlayingId === recording.id ? 'Pause recording' : 'Play recording'}
                   >
-                    <Play className="w-4 h-4" />
+                    {currentlyPlayingId === recording.id ? (
+                      <Pause className="w-4 h-4 animate-pulse" />
+                    ) : (
+                      <Play className="w-4 h-4" />
+                    )}
                   </button>
+
                   <button
                     onClick={() => onLoop(recording.id)}
                     className="p-2 rounded-full hover:bg-white/10 text-blue-500 transition-colors"
