@@ -95,7 +95,7 @@ export default function BetaForm({ onClose }: BetaFormProps) {
                 value={contact}
                 onChange={(e) => {
                   const value = e.target.value;
-                  if (/^\d*$/.test(value)) {
+                  if (/^\d*$/.test(value) && value.length <= 10) {
                     setContact(value);
                   }
                 }}
@@ -105,7 +105,7 @@ export default function BetaForm({ onClose }: BetaFormProps) {
               />
               {isSaved ? (
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center">
-                  <span className="text-green-500 animate-fade-in">✅ Saved</span>
+                  <span className="text-green-500 animate-fade-in">Saved</span>
                 </div>
               ) : (
                 <button
