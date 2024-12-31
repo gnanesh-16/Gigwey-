@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { Play, MousePointer2, Cpu, Zap, Network, ListVideo, Repeat } from 'lucide-react'; // Add Repeat icon
+import React, { useState, useEffect, useRef } from 'react';
+import { Play, MousePointer2, Cpu, Zap, Network, ListVideo, Repeat } from 'lucide-react';
 import Container from './layout/Container';
 import RecordingStatus from './recording/RecordingStatus';
 import RecordingsList from './recording/RecordingsList';
 import Infographic from './infographics/Infographic';
 export const runtime = "edge";
+
 export default function Hero() {
   const [isRecording, setIsRecording] = useState(false);
   const [showRecordings, setShowRecordings] = useState(false);
@@ -18,10 +19,36 @@ export default function Hero() {
     }
   ]);
   const [loopCounts, setLoopCounts] = useState<{ [key: string]: number }>({});
+  const [duration, setDuration] = useState(0);
+  const [actions, setActions] = useState(0);
+  const [size, setSize] = useState(0);
+
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (isRecording) {
+      intervalRef.current = setInterval(() => {
+        setDuration(prev => prev + 1);
+        setActions(Math.floor(Math.random() * 52) + 1);
+        setSize((prevDuration) => (prevDuration + 1) * 0.5);
+      }, 1000);
+    } else if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    return () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isRecording]);
 
   const handleStartRecording = () => {
     setIsRecording(true);
     setShowRecordings(false);
+    setDuration(0);
+    setActions(0);
+    setSize(0);
   };
 
   const handleStopRecording = () => {
@@ -30,8 +57,8 @@ export default function Hero() {
       id: Date.now().toString(),
       name: `Recording ${recordings.length + 1}`,
       date: new Date().toLocaleString(),
-      duration: '00:00',
-      size: '0.6 MB'
+      duration: new Date(duration * 1000).toISOString().substr(11, 8),
+      size: `${(size / 1024).toFixed(2)} MB`
     };
     setRecordings([...recordings, newRecording]);
   };
@@ -89,7 +116,9 @@ export default function Hero() {
       </div>
 
       {/* Main Content */}
-      <Container className="relative pt-32 pb-20">
+      <Container 
+        className="relative pt-32 pb-20"
+      >
         <div className="flex flex-col items-center justify-center min-h-[80vh]">
           <div className="text-center max-w-4xl mx-auto space-y-8">
             <h1 className="text-7xl sm:text-8xl font-bold tracking-tight">
@@ -178,9 +207,9 @@ export default function Hero() {
       {/* Recording Status */}
       {isRecording && (
         <RecordingStatus
-          duration="00:00:01"
-          actions={1}
-          size="0.6 MB"
+          duration={new Date(duration * 1000).toISOString().substr(11, 8)}
+          actions={actions}
+          size={`${(size / 1024).toFixed(2)} MB`}
           onPause={() => console.log('Paused')}
           onStop={handleStopRecording}
         />

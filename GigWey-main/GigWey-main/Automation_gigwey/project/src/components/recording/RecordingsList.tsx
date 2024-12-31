@@ -18,9 +18,12 @@ interface RecordingsListProps {
   onLoop: (id: string) => void; // Make onLoop required
   onResetLoop: (id: string) => void; // Add new prop
   onRename: (id: string, newName: string) => void; // Add new prop
+  duration?: string; // Add
+  actions?: number;  // Add
+  size?: string;     // Add
 }
 
-export default function RecordingsList({ recordings, onPlay, onDelete, onLoop, onResetLoop, onRename }: RecordingsListProps) {
+export default function RecordingsList({ recordings, onPlay, onDelete, onLoop, onResetLoop, onRename, duration, actions, size }: RecordingsListProps) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [newName, setNewName] = useState<string>('');
 
