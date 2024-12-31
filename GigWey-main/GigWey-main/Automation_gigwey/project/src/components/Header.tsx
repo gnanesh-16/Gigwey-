@@ -26,7 +26,9 @@ export default function Header() {
           <nav className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
               <Settings className="w-6 h-6 text-orange-500 animate-spin-slow" />
-              <span className="text-white text-xl font-semibold">GigWey</span>
+              <a href="/" className="text-white text-xl font-semibold hover:text-orange-500 transition-colors">
+                GigWey
+              </a>
             </div>
             
             <div className="flex items-center gap-8">

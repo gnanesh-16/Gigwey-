@@ -97,12 +97,12 @@ export default function RecordingsList({ recordings, onPlay, onPause, onDelete, 
                   </div>
                 </div>
                 <div className="flex items-center gap-2 relative">
-                  {/* Toggle between Play and Pause */}
+                  {/* Toggle between Play and Pause with Enhanced Animation */}
                   <button
                     onClick={() => {
                       currentlyPlayingId === recording.id ? onPause(recording.id) : onPlay(recording.id);
                     }}
-                    className={`p-2 rounded-full transition-transform duration-300 ${
+                    className={`relative p-2 rounded-full transition-transform duration-300 ${
                       currentlyPlayingId === recording.id
                         ? 'text-red-500 transform rotate-90'
                         : 'hover:bg-white/10 text-orange-500'
@@ -110,7 +110,11 @@ export default function RecordingsList({ recordings, onPlay, onPause, onDelete, 
                     title={currentlyPlayingId === recording.id ? 'Pause recording' : 'Play recording'}
                   >
                     {currentlyPlayingId === recording.id ? (
-                      <Pause className="w-4 h-4 animate-pulse" />
+                      <>
+                        {/* Glowing Background */}
+                        <span className="absolute inset-0 bg-red-500/20 rounded-full blur-lg animate-pulse"></span>
+                        <Pause className="w-4 h-4 relative z-10" />
+                      </>
                     ) : (
                       <Play className="w-4 h-4" />
                     )}
