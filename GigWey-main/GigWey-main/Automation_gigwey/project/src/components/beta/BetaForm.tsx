@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, X } from 'lucide-react';
+import Confetti from 'react-confetti'; // Import react-confetti
 export const runtime = "edge";
 
 interface BetaFormProps {
@@ -13,6 +14,8 @@ export default function BetaForm({ onClose }: BetaFormProps) {
   const [contact, setContact] = useState('');
   const [countryCode, setCountryCode] = useState('+91');
   const [isSaved, setIsSaved] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false); // Add state for confetti
+  const [showPopup, setShowPopup] = useState(false); // Add state for popup
 
   const handleSave = () => {
     if (contact) {
@@ -25,17 +28,30 @@ export default function BetaForm({ onClose }: BetaFormProps) {
     e.preventDefault();
     // Handle form submission
     console.log({ email, newsletter, fullName, contact, countryCode });
-    onClose();
+    setShowConfetti(true); // Show confetti on form submission
+    setShowPopup(true); // Show popup on form submission
+    setTimeout(() => {
+      setShowConfetti(false); // Hide confetti after 5 seconds
+      setShowPopup(false); // Hide popup after 5 seconds
+      onClose();
+    }, 5000);
   };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+      {showConfetti && <Confetti />} {/* Render confetti */}
+      {showPopup && (
+        <div className="fixed top-1/4 left-1/2 transform -translate-x-1/2 bg-black/60 text-white p-4 rounded-lg shadow-lg z-50 border border-gray-500 backdrop-blur-sm animate-popup">
+          <p>You've successfully registered for the API beta with the email: <span className="bg-green-500 text-black px-2 py-1 rounded">{email}</span></p>
+          <div className="absolute inset-0 border-2 border-transparent border-t-silver animate-border-spin"></div>
+        </div>
+      )}
       <div 
-        className="absolute inset-0 bg-black/90 backdrop-blur-xl"
+        className="absolute inset-0 bg-black/90 backdrop-blur-lg"
         onClick={onClose}
       />
       
-      <div className="relative bg-zinc-900/90 rounded-2xl p-8 max-w-md w-full border border-white/50">
+      <div className="relative bg-zinc-900/90 rounded-2xl p-8 max-w-md w-full border border-white/50 z-40"> {/* Add z-40 to ensure the container is below the popup */}
         <button 
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
@@ -143,3 +159,34 @@ export default function BetaForm({ onClose }: BetaFormProps) {
     </div>
   );
 }
+
+// Add the following CSS to your styles
+<style jsx>{`
+  @keyframes popup {
+    0% {
+      transform: translateY(-20px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes border-spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(720deg);
+    }
+  }
+
+  .animate-popup {
+    animation: popup 0.5s ease-out forwards;
+  }
+
+  .animate-border-spin {
+    animation: border-spin 2s linear forwards;
+  }
+`}</style>

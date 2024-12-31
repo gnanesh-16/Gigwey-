@@ -155,7 +155,7 @@ export default function Hero() {
   }, [displayedText, isDeleting, loopNum]);
 
   return (
-    <main className="relative min-h-screen bg-black overflow-hidden">
+    <main className="relative min-h-screen bg-black overflow-hidden flex flex-col">
       {/* Background Elements */}
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-b from-black via-black to-zinc-900" />
@@ -179,70 +179,66 @@ export default function Hero() {
       </div>
 
       {/* Main Content */}
-      <Container
-        className="relative pt-32 pb-20"
-      >
-        <div className="flex flex-col items-center justify-center min-h-[80vh]">
-          <div className="text-center max-w-4xl mx-auto space-y-8">
-            <h1 className="text-7xl sm:text-8xl font-bold tracking-tight animate-fade-in">
-              <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/60">
-                Web Automation
+      <Container className="relative pt-32 pb-20 flex flex-col items-center justify-center flex-grow">
+        <div className="text-center max-w-4xl mx-auto space-y-8">
+          <h1 className="text-7xl sm:text-8xl font-bold tracking-tight animate-fade-in">
+            <span className="bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-white/60">
+              Web Automation
+            </span>
+            <br />
+            <span className="relative inline-block mt-2">
+              <span className="animate-gradient-x text-6xl sm:text-7xl bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent">
+                Reimagined
               </span>
-              <br />
-              <span className="relative inline-block mt-2">
-                <span className="animate-gradient-x text-6xl sm:text-7xl bg-gradient-to-r from-slate-300 to-slate-500 bg-clip-text text-transparent">
-                  Reimagined
-                </span>
-                <div className="absolute -inset-x-6 -inset-y-4 bg-orange-500/20 blur-2xl -z-10" />
+              <div className="absolute -inset-x-6 -inset-y-4 bg-orange-500/20 blur-2xl -z-10" />
+            </span>
+          </h1>
+
+          <p className="text-xl sm:text-2xl text-gray-400 max-w-2xl mx-auto animate-fade-in">
+            Automate your web workflows with pixel-perfect precision and
+            <span className="text-orange-500">
+              <span className="ml-1 inline-block">
+                {displayedText}
+                <span className="border-r-2 border-white animate-pulse ml-1"></span>
               </span>
-            </h1>
+            </span>
+          </p>
 
-            <p className="text-xl sm:text-2xl text-gray-400 max-w-2xl mx-auto animate-fade-in">
-              Automate your web workflows with pixel-perfect precision and
-              <span className="text-orange-500">
-                <span className="ml-1 inline-block">
-                  {displayedText}
-                  <span className="border-r-2 border-white animate-pulse ml-1"></span>
-                </span>
-              </span>
-            </p>
+          <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4">
+            <button
+              onClick={handleStartRecording}
+              className="group relative inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-transparent hover:border-slate-300 w-full sm:w-auto sm:px-14"
+            >
+              <Play className="w-5 h-5" />
+              <span className="font-medium">Start Recording</span>
+            </button>
 
-            <div className="pt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full px-4">
-              <button
-                onClick={handleStartRecording}
-                className="group relative inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-transparent hover:border-slate-300 w-full sm:w-auto sm:px-14"
-              >
-                <Play className="w-5 h-5" />
-                <span className="font-medium">Start Recording</span>
-              </button>
-
-              <button
-                onClick={() => setShowRecordings(true)}
-                className="group relative inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-transparent hover:border-slate-300 w-full sm:w-auto sm:px-14"
-              >
-                <ListVideo className="w-5 h-5" />
-                <span className="font-medium">View Recordings</span>
-              </button>
-            </div>
+            <button
+              onClick={() => setShowRecordings(true)}
+              className="group relative inline-flex items-center gap-2 bg-white/5 hover:bg-white/10 text-white px-8 py-4 rounded-full transition-all duration-300 hover:scale-105 border border-transparent hover:border-slate-300 w-full sm:w-auto sm:px-14"
+            >
+              <ListVideo className="w-5 h-5" />
+              <span className="font-medium">View Recordings</span>
+            </button>
           </div>
+        </div>
 
-          {/* Recordings List or Infographic */}
-          <div className="mt-32 w-full">
-            {showRecordings ? (
-              <RecordingsList
-                recordings={recordings}
-                onPlay={handlePlayRecording}
-                onPause={handlePauseRecording} // Pass onPause prop
-                onDelete={handleDeleteRecording}
-                onLoop={handleLoopClick}
-                onResetLoop={handleResetLoop}
-                onRename={handleRename}
-                currentlyPlayingId={currentlyPlayingId} // Pass currentlyPlayingId prop
-              />
-            ) : (
-              <Infographic />
-            )}
-          </div>
+        {/* Recordings List or Infographic */}
+        <div className="mt-32 w-full flex-grow">
+          {showRecordings ? (
+            <RecordingsList
+              recordings={recordings}
+              onPlay={handlePlayRecording}
+              onPause={handlePauseRecording} // Pass onPause prop
+              onDelete={handleDeleteRecording}
+              onLoop={handleLoopClick}
+              onResetLoop={handleResetLoop}
+              onRename={handleRename}
+              currentlyPlayingId={currentlyPlayingId} // Pass currentlyPlayingId prop
+            />
+          ) : (
+            <Infographic />
+          )}
         </div>
       </Container>
 
