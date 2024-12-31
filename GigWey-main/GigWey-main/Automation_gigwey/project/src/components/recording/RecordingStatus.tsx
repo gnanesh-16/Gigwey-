@@ -1,5 +1,5 @@
 import React from 'react';
-import { Pause, Square, Clock, Zap, HardDrive } from 'lucide-react';
+import { Pause, Play, Square, Clock, Zap, HardDrive } from 'lucide-react';
 export const runtime = "edge";
 interface RecordingStatusProps {
   duration: string;
@@ -16,6 +16,13 @@ export default function RecordingStatus({
   onPause,
   onStop,
 }: RecordingStatusProps) {
+  const [isPaused, setIsPaused] = React.useState(false);
+
+  const handleTogglePause = () => {
+    setIsPaused(!isPaused);
+    onPause(); 
+  };
+
   return (
     <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-40">
       <div className="relative">
@@ -28,11 +35,20 @@ export default function RecordingStatus({
 
           <div className="flex items-center gap-4 mb-6">
             <button
-              onClick={onPause}
+              onClick={handleTogglePause}
               className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-lg transition-colors"
             >
-              <Pause className="w-4 h-4" />
-              <span>Pause</span>
+              {isPaused ? (
+                <>
+                  <Play className="w-4 h-4" />
+                  <span>Play</span>
+                </>
+              ) : (
+                <>
+                  <Pause className="w-4 h-4" />
+                  <span>Pause</span>
+                </>
+              )}
             </button>
 
             <button
