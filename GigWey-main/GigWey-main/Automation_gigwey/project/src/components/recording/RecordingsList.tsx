@@ -1,5 +1,5 @@
 import React from 'react';
-import { Play, Trash2, Clock, HardDrive } from 'lucide-react';
+import { Play, Trash2, Clock, HardDrive, Repeat } from 'lucide-react'; // Add Repeat
 export const runtime = "edge";
 interface Recording {
   id: string;
@@ -13,9 +13,10 @@ interface RecordingsListProps {
   recordings: Recording[];
   onPlay: (id: string) => void;
   onDelete: (id: string) => void;
+  onLoop?: (id: string) => void; // Add onLoop prop
 }
 
-export default function RecordingsList({ recordings, onPlay, onDelete }: RecordingsListProps) {
+export default function RecordingsList({ recordings, onPlay, onDelete, onLoop }: RecordingsListProps) {
   return (
     <div className="space-y-4 w-full max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold mb-6 text-center"></h2>
@@ -49,6 +50,13 @@ export default function RecordingsList({ recordings, onPlay, onDelete }: Recordi
                   title="Play recording"
                 >
                   <Play className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={() => onLoop?.(recording.id)}
+                  className="p-2 rounded-full hover:bg-white/10 text-blue-500 transition-colors"
+                  title="Loop recording"
+                >
+                  <Repeat className="w-4 h-4" />
                 </button>
                 <button
                   onClick={() => onDelete(recording.id)}

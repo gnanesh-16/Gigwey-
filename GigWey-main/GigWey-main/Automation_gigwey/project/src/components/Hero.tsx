@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Play, MousePointer2, Cpu, Zap, Network, ListVideo } from 'lucide-react';
+import { Play, MousePointer2, Cpu, Zap, Network, ListVideo, Repeat } from 'lucide-react'; // Add Repeat icon
 import Container from './layout/Container';
 import RecordingStatus from './recording/RecordingStatus';
 import RecordingsList from './recording/RecordingsList';
@@ -37,6 +37,10 @@ export default function Hero() {
 
   const handleDeleteRecording = (id: string) => {
     setRecordings(recordings.filter(rec => rec.id !== id));
+  };
+
+  const handleLoopClick = (id: string) => {
+    console.log('Loop clicked for recording', id);
   };
 
   return (
@@ -110,6 +114,7 @@ export default function Hero() {
                 recordings={recordings}
                 onPlay={(id) => console.log('Playing', id)}
                 onDelete={handleDeleteRecording}
+                onLoop={(id) => console.log('Looping', id)}
               />
             ) : (
               <Infographic />
