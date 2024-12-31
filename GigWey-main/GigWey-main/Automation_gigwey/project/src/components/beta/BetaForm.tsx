@@ -25,7 +25,7 @@ export default function BetaForm({ onClose }: BetaFormProps) {
         onClick={onClose}
       />
       
-      <div className="relative bg-zinc-900/90 rounded-2xl p-8 max-w-md w-full border border-white/10">
+      <div className="relative bg-zinc-900/90 rounded-2xl p-8 max-w-md w-full border border-white/50">
         <button 
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
