@@ -1,5 +1,5 @@
-import React from 'react';
-import { Play, Trash2, Clock, HardDrive, Repeat, X } from 'lucide-react'; // Add X icon
+import React, { useState } from 'react';
+import { Play, Trash2, Clock, HardDrive, Repeat, X, Edit3 } from 'lucide-react'; // Add Edit3 icon
 export const runtime = "edge";
 
 interface Recording {
@@ -17,9 +17,19 @@ interface RecordingsListProps {
   onDelete: (id: string) => void;
   onLoop: (id: string) => void; // Make onLoop required
   onResetLoop: (id: string) => void; // Add new prop
+  onRename: (id: string, newName: string) => void; // Add new prop
 }
 
-export default function RecordingsList({ recordings, onPlay, onDelete, onLoop, onResetLoop }: RecordingsListProps) {
+export default function RecordingsList({ recordings, onPlay, onDelete, onLoop, onResetLoop, onRename }: RecordingsListProps) {
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [newName, setNewName] = useState<string>('');
+
+  const handleRename = (id: string) => {
+    onRename(id, newName);
+    setEditingId(null);
+    setNewName('');
+  };
+
   return (
     <div className="space-y-4 w-full max-w-2xl mx-auto">
       <h2 className="text-2xl font-bold mb-6 text-center"></h2>
@@ -31,9 +41,44 @@ export default function RecordingsList({ recordings, onPlay, onDelete, onLoop, o
             >
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <h3 className="font-semibold text-white group-hover:text-orange-500 transition-colors">
-                    {recording.name}
-                  </h3>
+                  {editingId === recording.id ? (
+                    <div className="flex items-center gap-2">
+                      <input
+                        type="text"
+                        value={newName}
+                        onChange={(e) => setNewName(e.target.value)}
+                        className="bg-zinc-800 text-white rounded-lg px-2 py-1 border border-gray-300"
+                      />
+                      <button
+                        onClick={() => handleRename(recording.id)}
+                        className="text-green-500 hover:text-green-700 transition-colors text-sm"
+                      >
+                        Save
+                      </button>
+                      <button
+                        onClick={() => setEditingId(null)}
+                        className="text-red-500 hover:text-red-700 transition-colors text-sm"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-2">
+                      <h3 className="font-semibold text-white group-hover:text-orange-500 transition-colors">
+                        {recording.name}
+                      </h3>
+                      <button
+                        onClick={() => {
+                          setEditingId(recording.id);
+                          setNewName(recording.name);
+                        }}
+                        className="text-blue-500 hover:text-blue-300 transition-colors"
+                        title="Edit name"
+                      >
+                        <Edit3 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  )}
                   <div className="flex items-center gap-4 mt-2 text-sm text-gray-400">
                     <div className="flex items-center gap-1">
                       <Clock className="w-4 h-4" />
